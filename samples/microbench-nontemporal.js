@@ -1,6 +1,4 @@
 var eep = require('eep');
-var noop = require('eep.fn.noop').Noop;
-var stats = require('eep.fn.stats').Stats;
 
 var head = function(type, name) {
   console.log('Microbench - Window Type: ' + type + ' with function \'' + name + '\'\n');
@@ -22,8 +20,8 @@ var bench = function(type, name, win, size, items) {
 };
 
 var fns = [
-  noop.noop, stats.count, stats.sum, stats.min, stats.max,
-  stats.mean, stats.vars, stats.stdevs, stats.kurtosis
+  eep.Noop.noop, eep.Stats.count, eep.Stats.sum, eep.Stats.min, eep.Stats.max,
+  eep.Stats.mean, eep.Stats.vars, eep.Stats.stdevs, eep.Stats.kurtosis
 ];
 var sizes = [2,4,8,16,32,64,128,256,512];
 var items = 10000000; // 10M

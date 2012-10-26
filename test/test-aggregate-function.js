@@ -1,5 +1,4 @@
 var eep = require('eep');
-var stats = require('eep.fn.stats').Stats;
 
 var events = require('events');
 var testCase = require('nodeunit').testCase;
@@ -29,7 +28,7 @@ exports.read = testCase({
     cb();
   },
   'simple aggregate function': function(assert) {
-    var avg = stats.mean;
+    var avg = eep.Stats.mean;
     assert.ok(avg != null);
 
     avg.init();

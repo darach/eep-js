@@ -62,23 +62,22 @@ Monitoring, alerting decision support and a lot of technical indicators in real-
 These are very easy to use:
 
 ```
-// Include the EEP library, and optional statistics package
+// Include the EEP library, and builtin packages
 var eep = require('eep');
-var stats = require('eep.fn.stats').Stats;
 ```
 
 Create the windows for the desired operation:
 
 ```
 // Tumbling windows
-var tumbling_count = eep.EventWorld.make().windows().tumbling(stats.count, values.length);
-var tumbling_sum = eep.EventWorld.make().windows().tumbling(stats.sum, values.length);
-var tumbling_min = eep.EventWorld.make().windows().tumbling(stats.min, values.length);
-var tumbling_max = eep.EventWorld.make().windows().tumbling(stats.max, values.length);
-var tumbling_mean = eep.EventWorld.make().windows().tumbling(stats.mean, values.length);
-var tumbling_stdevs = eep.EventWorld.make().windows().tumbling(stats.stdevs, values.length);
-var tumbling_vars = eep.EventWorld.make().windows().tumbling(stats.vars, values.length);
-var tumbling_kurtosis = eep.EventWorld.make().windows().tumbling(stats.kurtosis, values.length);
+var tumbling_count = eep.EventWorld.make().windows().tumbling(eep.Stats.count, values.length);
+var tumbling_sum = eep.EventWorld.make().windows().tumbling(eep.Stats.sum, values.length);
+var tumbling_min = eep.EventWorld.make().windows().tumbling(eep.Stats.min, values.length);
+var tumbling_max = eep.EventWorld.make().windows().tumbling(eep.Stats.max, values.length);
+var tumbling_mean = eep.EventWorld.make().windows().tumbling(eep.Stats.mean, values.length);
+var tumbling_stdevs = eep.EventWorld.make().windows().tumbling(eep.Stats.stdevs, values.length);
+var tumbling_vars = eep.EventWorld.make().windows().tumbling(eep.Stats.vars, values.length);
+var tumbling_kurtosis = eep.EventWorld.make().windows().tumbling(eep.Stats.kurtosis, values.length);
 ```
 
 Register callback functions to 'collect' your statistics. In the above
@@ -158,9 +157,11 @@ If you wanted to get statistics on all the numbers from 1 to 1000000 inclusively
 ```
 var util = require('util');
 var eep = require('eep');
-var Stats = require('eep.fn.stats').Stats;
 
-var stats = [ Stats.count, Stats.sum, Stats.min, Stats.max, Stats.mean, Stats.vars, Stats.stdevs, Stats.kurtosis ];
+var stats = [ 
+  eep.Stats.count, eep.Stats.sum, eep.Stats.min, eep.Stats.max, 
+  eep.Stats.mean, eep.Stats.vars, eep.Stats.stdevs, eep.Stats.kurtosis 
+];
 var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Variance\t', 'Stdev\t\t', 'Kurtosis\t' ];
 var monotonic  = eep.EventWorld.make().windows().monotonic(Stats.all, new eep.CountingClock());
 
@@ -196,9 +197,8 @@ Sometimes the ingress of an event or triggering a close on a window is useful en
 ```
 var util = require('util');
 var eep = require('eep');
-var Stats = require('eep.fn.noop').Noop;
 
-var monotonic  = eep.EventWorld.make().windows().monotonic(Noop.noop, new eep.CountingClock());
+var monotonic  = eep.EventWorld.make().windows().monotonic(eep.Noop.noop, new eep.CountingClock());
 
 monotonic.on('emit', function(values) {
   console.log('A window closed. Do something useful!');

@@ -1,9 +1,7 @@
 var util = require('util');
 var events = require('events');
 
-var Eep = require('eep');
-var Stats = require('eep.fn.stats').Stats;
-var Noop = require('eep.fn.noop').Noop;
+var eep = require('eep');
 
 var millis = 3000;
 
@@ -25,7 +23,7 @@ var MicroBench = function(max) {
 
   self.runSuite = function(op, size, fn) {
     n = 0; count = 0;
-    var win = Eep.EventWorld.make().windows().periodic(op.make(), size);
+    var win = eep.EventWorld.make().windows().periodic(op.make(), size);
     win.on('emit', function(value) {
       count++;
     }); 
@@ -63,12 +61,14 @@ bench.on('end', function(fn, size, spec, secs, rate) {
 
 var results = [];
 var record = function(size, spec, secs, rate) {
-  console.log('s,s,s,r: ' + size + ', ' + spec + ', ' + secs + ', ' + rate);
       results.push({ size: size, name: spec, elapsed: secs, rate: rate });
 };
 
 console.log('1000\t100\t10\t1\top');
-var ops = [Noop.noop, Stats.count, Stats.sum, Stats.min, Stats.max, Stats.mean, Stats.stdevs, Stats.vars, Stats.kurtosis];
+var ops = [
+  eep.Noop.noop, eep.Stats.count, eep.Stats.sum, eep.Stats.min,
+  eep.Stats.max, eep.Stats.mean, eep.Stats.stdevs, eep.Stats.vars, eep.Stats.kurtosis
+];
 var sizes = [1000, 100, 10, 1];
 for (var o in ops) {
   results = [];

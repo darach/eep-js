@@ -1,18 +1,17 @@
 var util = require('util');
 var eep = require('eep');
-var Stats = require('eep.fn.stats').Stats;
 
 // A custom aggregate that inline composes aggregate functions.
 var LeStatFunction = function() {
   var self = this;
-  var count = Stats.count.make();
-  var sum = Stats.sum.make();
-  var min = Stats.min.make();
-  var max = Stats.max.make();
-  var mean = Stats.mean.make();
-  var vars = Stats.vars.make();
-  var stdevs = Stats.stdevs.make();
-  var kurtosis = Stats.kurtosis.make();
+  var count = eep.Stats.count.make();
+  var sum = eep.Stats.sum.make();
+  var min = eep.Stats.min.make();
+  var max = eep.Stats.max.make();
+  var mean = eep.Stats.mean.make();
+  var vars = eep.Stats.vars.make();
+  var stdevs = eep.Stats.stdevs.make();
+  var kurtosis = eep.Stats.kurtosis.make();
   self.init = function() {
     count.init();
     sum.init();
@@ -48,14 +47,17 @@ var LeStatFunction = function() {
   self.make = function() { return new LeStatFunction(); };
 };
 util.inherits(LeStatFunction, eep.AggregateFunction);
-var stats = [ Stats.count, Stats.sum, Stats.min, Stats.max, Stats.mean, Stats.vars, Stats.stdevs, Stats.kurtosis ];
+var stats = [
+  eep.Stats.count, eep.Stats.sum, eep.Stats.min, eep.Stats.max, 
+  eep.Stats.mean, eep.Stats.vars, eep.Stats.stdevs, eep.Stats.kurtosis
+];
 var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Variance\t', 'Stdev\t\t', 'Kurtosis\t' ];
 
 // Convenient. But should only be used for composing independant, not related functions
 var m1= eep.EventWorld.make().windows().monotonic(new eep.CompositeFunction(stats), new eep.WallClock(0));
 
 // Correct. The stats functions can be coalesced into a single function. Faster by 4X
-var m2 = eep.EventWorld.make().windows().monotonic(Stats.all, new eep.CountingClock());
+var m2 = eep.EventWorld.make().windows().monotonic(eep.Stats.all, new eep.CountingClock());
 
 // Neither. Faster than m1, but slower than m2. Save some cycles, use m2!
 var m3 = eep.EventWorld.make().windows().monotonic(new LeStatFunction(), new eep.CountingClock());

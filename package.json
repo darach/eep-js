@@ -1,40 +1,29 @@
 {
   "name": "eep",
-  "description": "Embedded Event Processing",
-  "author": [
-    {
-      "name": "Darach Ennis",
-      "url": "http://github.com/darach"
-    }
-  ],
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "description": "Embedded Event Processing in Node.js",
+  "main": "eep.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
   "repository": {
     "type": "git",
-    "url": "http://github.com/darach/eep-js.git"
+    "url": "https://github.com/darach/eep-js.git"
   },
-  "devDependencies": {
-    "nodeunit": ">=0.7.4",
-    "profile": ">=0.0.10",
-    "docco": ">=0.4.0",
-    "line-reader": ">=0.2.3",
-  },
-  "bugs": {
-    "url": "http://github.com/darach/eep-js/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://github.com/darach/eep-js/raw/master/LICENSE"
-    }
+  "keywords": [
+    "cep"
   ],
-  "directories": {
-    "bin": "./bin",
-    "lib": "./lib",
-    "docs": "./docs",
-    "samples": "./samples",
-    "test": "./test"
+  "author": "Darach Ennis",
+  "license": "MIT",
+  "dependencies": {
+    "docco": "~0.4.0",
+    "line-reader": "~0.2.3",
+    "nodeunit": "~0.7.4",
+    "profile": "~0.0.10"
   },
-  "readme": "Embedded Event Processing",
-  "_id": "eep-js@0.1.0",
-  "_from": "eep"
+  "devDependencies": {},
+  "scripts": {
+    "test": "./wat test"
+  }
 }
