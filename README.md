@@ -251,16 +251,14 @@ var win = eep.EventWorld.make().windows().monotonic(
 );
 ```
 
-We just attach this to a stream of events (log lines from an apache weblog from the file system or network). I grabbed the sample file from Tim Bray's website and grok out the lines with line-reader (which is *really* slow and could do with some mechanical sympathy! :/ ):
+We just attach this to a stream of events (log lines from an apache weblog from the file system or network). I grabbed the sample file from Tim Bray's website and grok out the lines with byline: 
 
 ```
-  lr.eachLine(data, function(line, last) {
-    win.enqueue(line);
-    if (last) {
-      win.tick();
-      return false;
-    }
-  });
+  var stream = fs.createReadStream(data);
+  var stream = byline.createStream(stream);
+
+  stream.on('data', function(line) { win.enqueue(line); });
+  stream.on('end', function() { win.tick(); });
 ```
 
 And of course, you registered an emit callback, right?

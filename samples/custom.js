@@ -1,6 +1,6 @@
 var http = require('http');
 var fs = require('fs');
-var lr = require('line-reader');
+var byline = require('byline');
 
 var eep = require('eep');
 var data = __dirname + '/data.txt';
@@ -60,13 +60,11 @@ var fetch = function(cb) {
 };
 
 var widefinder = function() {
-  lr.eachLine(data, function(line, last) {
-    win.enqueue(line);
-    if (last) {
-      win.tick();
-      return false;
-    }
-  });
+  var stream = fs.createReadStream(data);
+  var stream = byline.createStream(stream);
+
+  stream.on('data', function(line) { win.enqueue(line); });
+  stream.on('end', function() { win.tick(); });
 };
 
 //
