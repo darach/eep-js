@@ -8,7 +8,7 @@
 
 **eep.js** was introduced at my talk on [Data Distribution in the Cloud with Node.js](http://bit.ly/R8bsWH) at the [Node Dublin](http://www.nodedublin.com) conference in October 2012.
 
-I wrote **eep.js** as I find the lack of data-centric stream processing operations in OO and functional languages lacking. Data-centric stream or event processing rewires your brain to think in terms of data flow. Node.js is the 1st language, to my knowledge, that is tyranically asynchronous, devilishly event-oriented and amazoidingly non-blocking. That's music to a CEP guys ears. Good music. Thin Lizzy good. An environment that makes event or stream processing natural is a big win. So thank you Node.js folk! Loving it.
+I wrote **eep.js** as I find the lack of data-centric stream processing operations in OO and functional languages lacking. Data-centric stream or event processing rewires your brain to think in terms of data flow. Node.js is the 1st language, to my knowledge, that is tyrannically asynchronous, devilishly event-oriented and amazoidingly non-blocking. That's music to a CEP guys ears. Good music. Thin Lizzy good. An environment that makes event or stream processing natural is a big win. So thank you Node.js folk! Loving it.
 
 Last, but not least, **eep.js** is fast. As a devotee, fan and practitioner of Martin Thompson's 'Mechanical Sympathy' I thought it would be fun to apply principles normally reserved for lower level languages such as C, Java or even assembly to a dynamic language like JavaScript, with the V8 powered Node.js in particular.
 
