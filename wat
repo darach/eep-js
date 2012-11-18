@@ -73,7 +73,7 @@ case $cmd in
     node_modules/docco/bin/docco `find lib -name \*.js`
     ;;
   profile )
-   NODE_PATH=lib node_modules/profile/bin/nodeprofile -o=profile.txt samples/microbench-nontemporal2.js
+   NODE_PATH=lib node_modules/profile/bin/nodeprofile -o=profile.txt samples/microbench-nontemporal.js
     ;;
   microbench )
     NODE_PATH=lib node samples/microbench-nontemporal.js
