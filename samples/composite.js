@@ -32,6 +32,16 @@ var LeStatFunction = function() {
     stdevs.accumulate(v);
     kurtosis.accumulate(v);
   };
+  self.compensate = function(v) {
+    count.compensate(v);
+    sum.compensate(v);
+    min.compensate(v);
+    max.compensate(v);
+    mean.compensate(v);
+    vars.compensate(v);
+    stdevs.compensate(v);
+    kurtosis.compensate(v);
+  };
   self.emit = function() {
     return results = {
       count: count.emit(),

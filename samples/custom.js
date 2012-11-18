@@ -17,6 +17,13 @@ var WideFinderFunction = function(regex) {
     var v = keys[k];
     if (v) keys[k] = v+1; else keys[k] = 1; // count by key
   };
+  self.compensate = function(line) {
+    var m = re.exec(line);
+    if (m == null) return;
+    var k = m[1]; // use 1st group as key
+    var v = keys[k];
+    if (v) keys[k] = v-1; else keys[k] = 1;
+  };
   self.emit = function() {
     return keys;
   };

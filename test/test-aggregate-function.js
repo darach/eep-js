@@ -32,7 +32,7 @@ exports.read = testCase({
     assert.ok(avg != null);
 
     avg.init();
-    assert.ok(isNaN(avg.emit()));
+    assert.equals(0, avg.emit());
 
     avg.accumulate(1);
     assert.equals(1, avg.emit());

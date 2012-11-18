@@ -14,6 +14,7 @@ function AvgFunction() {
 
   self.init = function() { sum = 0; count = 0; };
   self.accumulate = function(value) { sum += value; count++; };
+  self.compensate = function(value) { sum -= value; count--; };
   self.emit = function()  { return (count == 0) ? 0 : (sum / count); };
   self.make = function() { return new AvgFunction(); };
 };
@@ -66,6 +67,22 @@ exports.read = testCase({
     sliding.enqueue(3);
     sliding.enqueue(4);
     assert.same([1.5,2.5,3.5], results);
+
+    var sliding  = eep.EventWorld.make().windows().sliding(new AvgFunction(), 3);
+    assert.ok(sliding != null);
+
+    var results = [];
+    sliding.on('emit', function(v) {
+      results.push(v);
+    });
+    sliding.enqueue(1);
+    sliding.enqueue(2);
+    sliding.enqueue(3);
+    sliding.enqueue(4);
+    sliding.enqueue(5);
+    sliding.enqueue(6);
+    assert.same([2,3,4,5], results);
+
     assert.done();
   },
   'periodic window': function (assert) {
