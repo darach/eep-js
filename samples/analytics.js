@@ -12,7 +12,6 @@ var tumbling_max = eep.EventWorld.make().windows().sliding(eep.Stats.max, values
 var tumbling_mean = eep.EventWorld.make().windows().sliding(eep.Stats.mean, values.length);
 var tumbling_stdevs = eep.EventWorld.make().windows().sliding(eep.Stats.stdevs, values.length);
 var tumbling_vars = eep.EventWorld.make().windows().sliding(eep.Stats.vars, values.length);
-var tumbling_kurtosis = eep.EventWorld.make().windows().sliding(eep.Stats.kurtosis, values.length);
 
 // Register callbacks
 tumbling_count.on('emit', function(value) { console.log('count:\t\t' + value); });
@@ -22,7 +21,6 @@ tumbling_max.on('emit', function(value) { console.log('max:\t\t' + value); });
 tumbling_mean.on('emit', function(value) { console.log('mean:\t\t' + value); });
 tumbling_stdevs.on('emit', function(value) { console.log('stdevs:\t\t' + value); });
 tumbling_vars.on('emit', function(value) { console.log('vars:\t\t' + value); });
-tumbling_kurtosis.on('emit', function(value) { console.log('kurtosis:\t' + value); });
 
 console.log('\n\nIndividual tumbling windows\n\n');
 
@@ -35,15 +33,14 @@ for (var i in values) {
   tumbling_mean.enqueue(values[i]);
   tumbling_stdevs.enqueue(values[i]);
   tumbling_vars.enqueue(values[i]);
-  tumbling_kurtosis.enqueue(values[i]);
 }
 
 // Alternatively, use a composite aggregate function
 var stats = [ 
   eep.Stats.count, eep.Stats.sum, eep.Stats.min, eep.Stats.max,
-  eep.Stats.mean, eep.Stats.vars, eep.Stats.stdevs, eep.Stats.kurtosis
+  eep.Stats.mean, eep.Stats.stdevs, eep.Stats.vars
 ];
-var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Variance\t', 'Stdev\t\t', 'Kurtosis\t' ];
+var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Stdev\t\t', 'Variance\t' ];
 
 // Create a composite function tumbling window
 var tumbling = eep.EventWorld.make().windows().tumbling(new eep.CompositeFunction(stats), values.length);

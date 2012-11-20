@@ -21,12 +21,12 @@ var bench = function(type, name, win, size, items) {
 
 var fns = [
   eep.Noop.noop, eep.Stats.count, eep.Stats.sum, eep.Stats.min, eep.Stats.max,
-  eep.Stats.mean, eep.Stats.vars, eep.Stats.stdevs, eep.Stats.kurtosis
+  eep.Stats.mean, eep.Stats.vars, eep.Stats.stdevs, eep.Stats.all
 ];
 var sizes = [2,4,8,16,32,64,128,256,512];
 var items = 10000000; // 10M
 
-console.log('Tumbling is fast for most N');
+console.log('Tumbling:');
 for (var fn in fns) {
   head('tumbling', fns[fn].name);
   for (var size in sizes) {
@@ -36,7 +36,7 @@ for (var fn in fns) {
   foot();
 }
 
-console.log('Sliding is fast enough for small N, but has complexity O(N^2)');
+console.log('Sliding:');
 for (var fn in fns) {
   head('sliding', fns[fn].name);
   for (var size in sizes) {

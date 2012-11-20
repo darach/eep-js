@@ -11,7 +11,6 @@ var LeStatFunction = function() {
   var mean = eep.Stats.mean.make();
   var vars = eep.Stats.vars.make();
   var stdevs = eep.Stats.stdevs.make();
-  var kurtosis = eep.Stats.kurtosis.make();
   self.init = function() {
     count.init();
     sum.init();
@@ -20,7 +19,6 @@ var LeStatFunction = function() {
     mean.init();
     vars.init();
     stdevs.init();
-    kurtosis.init();
   };
   self.accumulate = function(v) {
     count.accumulate(v);
@@ -30,7 +28,6 @@ var LeStatFunction = function() {
     mean.accumulate(v);
     vars.accumulate(v);
     stdevs.accumulate(v);
-    kurtosis.accumulate(v);
   };
   self.compensate = function(v) {
     count.compensate(v);
@@ -40,7 +37,6 @@ var LeStatFunction = function() {
     mean.compensate(v);
     vars.compensate(v);
     stdevs.compensate(v);
-    kurtosis.compensate(v);
   };
   self.emit = function() {
     return results = {
@@ -51,7 +47,6 @@ var LeStatFunction = function() {
       mean: mean.emit(),
       vars: vars.emit(),
       stdevs: stdevs.emit(),
-      kurtosis: kurtosis.emit()
     };
   };
   self.make = function() { return new LeStatFunction(); };
@@ -59,9 +54,9 @@ var LeStatFunction = function() {
 util.inherits(LeStatFunction, eep.AggregateFunction);
 var stats = [
   eep.Stats.count, eep.Stats.sum, eep.Stats.min, eep.Stats.max, 
-  eep.Stats.mean, eep.Stats.vars, eep.Stats.stdevs, eep.Stats.kurtosis
+  eep.Stats.mean, eep.Stats.vars, eep.Stats.stdevs
 ];
-var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Variance\t', 'Stdev\t\t', 'Kurtosis\t' ];
+var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Variance\t', 'Stdev\t\t' ];
 
 // Convenient. But should only be used for composing independant, not related functions
 var m1= eep.EventWorld.make().windows().monotonic(new eep.CompositeFunction(stats), new eep.WallClock(0));
@@ -108,7 +103,10 @@ for (var i = 1; i <= items; i++) {
 }
 m2.tick();
 var end = new Date().getTime();
-
+for (var i = 1; i <= items; i++) {
+  m2.enqueue(i);
+}
+m2.tick();
 console.log('V2. Elapsed: ' + (end - start) / 1e3 + ' meps: ' + ((end - start) / 1e3) / 1e6);
 
 var start = new Date().getTime();

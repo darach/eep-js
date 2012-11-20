@@ -1,6 +1,6 @@
 {
   "name": "eep",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Embedded Event Processing in Node.js",
   "main": "./lib/eep.js",
   "directories": {

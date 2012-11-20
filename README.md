@@ -57,7 +57,6 @@ Monitoring, alerting decision support and a lot of technical indicators in real-
 5. Mean - Gets the statistical mean
 6. Variance - Gets the sample variance
 7. Standard deviation - Gets the standard deviation
-8. Kurtosis - Gets the kurtosis
 
 These are very easy to use:
 
@@ -77,7 +76,6 @@ var tumbling_max = eep.EventWorld.make().windows().tumbling(eep.Stats.max, value
 var tumbling_mean = eep.EventWorld.make().windows().tumbling(eep.Stats.mean, values.length);
 var tumbling_stdevs = eep.EventWorld.make().windows().tumbling(eep.Stats.stdevs, values.length);
 var tumbling_vars = eep.EventWorld.make().windows().tumbling(eep.Stats.vars, values.length);
-var tumbling_kurtosis = eep.EventWorld.make().windows().tumbling(eep.Stats.kurtosis, values.length);
 ```
 
 Register callback functions to 'collect' your statistics. In the above
@@ -92,7 +90,6 @@ tumbling_max.on('emit', function(value) { console.log('max:\t\t' + value); });
 tumbling_mean.on('emit', function(value) { console.log('mean:\t\t' + value); });
 tumbling_stdevs.on('emit', function(value) { console.log('stdevs:\t\t' + value); });
 tumbling_vars.on('emit', function(value) { console.log('vars:\t\t' + value); });
-tumbling_kurtosis.on('emit', function(value) { console.log('kurtosis:\t' + value); });
 ```
 
 Pump data at the windows:
@@ -107,7 +104,6 @@ for (var i in values) {
   tumbling_mean.enqueue(values[i]);
   tumbling_stdevs.enqueue(values[i]);
   tumbling_vars.enqueue(values[i]);
-  tumbling_kurtosis.enqueue(values[i]);
 }
 ```
 When the last event hits the window will close, results emitted and a fresh window opened ready for another set of events. Just keep on pumping, basically.
@@ -122,15 +118,14 @@ max:            30
 mean:           11.222222222222223
 stdevs:         7.191134701884926
 vars:           51.71241830065361
-kurtosis:       0.7088252629275908
 ```
 
 Of course, if you're like me, you likely want all of the above statistics and you're *good lazy* so you can express a composition of (compatible) functions:
 
 ```
 // Alternatively, use a composite aggregate function
-var stats = [ stats.count, stats.sum, stats.min, stats.max, stats.mean, stats.vars, stats.stdevs, stats.kurtosis ];
-var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Variance\t', 'Stdev\t\t', 'Kurtosis\t' ];
+var stats = [ stats.count, stats.sum, stats.min, stats.max, stats.mean, stats.vars, stats.stdevs ];
+var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Variance\t', 'Stdev\t\t' ];
 
 // Create a composite function tumbling window
 var tumbling = eep.EventWorld.make().windows().tumbling(new eep.CompositeFunction(stats), values.length);
@@ -160,9 +155,9 @@ var eep = require('eep');
 
 var stats = [ 
   eep.Stats.count, eep.Stats.sum, eep.Stats.min, eep.Stats.max, 
-  eep.Stats.mean, eep.Stats.vars, eep.Stats.stdevs, eep.Stats.kurtosis 
+  eep.Stats.mean, eep.Stats.vars, eep.Stats.stdevs 
 ];
-var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Variance\t', 'Stdev\t\t', 'Kurtosis\t' ];
+var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Variance\t', 'Stdev\t\t' ];
 var monotonic  = eep.EventWorld.make().windows().monotonic(Stats.all, new eep.CountingClock());
 
 monotonic.on('emit', function(values) {
@@ -185,8 +180,7 @@ This will output a JSON tuple with all the stats:
   "max":1000000,
   "mean":500000.5,
   "vars":83333416666.66666,
-  "stdevs":288675.27893234405,
-  "kurtosis":-1.200000000002429
+  "stdevs":288675.27893234405
 }
 ```
 

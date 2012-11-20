@@ -3,7 +3,7 @@ var events = require('events');
 
 var eep = require('eep');
 
-var millis = 3000;
+var millis = 5000;
 
 var monitor;
 
@@ -46,12 +46,8 @@ util.inherits(MicroBench, events.EventEmitter);
 
 var round = function(x) { return Math.round(x*100)/100; }
 
-var sizes = [1000];
-
 console.log('Micro Benching Embedded Event Processing');
 console.log('\n');
-console.log('Legend Keys:');
-console.log(' 1 - Inline Periodic');
 
 var bench = new MicroBench(millis);
 
@@ -67,7 +63,7 @@ var record = function(size, spec, secs, rate) {
 console.log('1000\t100\t10\t1\top');
 var ops = [
   eep.Noop.noop, eep.Stats.count, eep.Stats.sum, eep.Stats.min,
-  eep.Stats.max, eep.Stats.mean, eep.Stats.stdevs, eep.Stats.vars, eep.Stats.kurtosis
+  eep.Stats.max, eep.Stats.mean, eep.Stats.stdevs, eep.Stats.vars
 ];
 var sizes = [1000, 100, 10, 1];
 for (var o in ops) {
