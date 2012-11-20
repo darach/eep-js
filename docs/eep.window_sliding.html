@@ -49,11 +49,11 @@ and the resulting performance is linear w.r.t the size of the window.</p>       
 
   <span class="nx">self</span><span class="p">.</span><span class="nx">enqueue</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">idx</span> <span class="o">&gt;=</span> <span class="nx">mark</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">po</span> <span class="o">=</span> <span class="p">(</span><span class="nx">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nx">size</span><span class="p">;</span>
       <span class="nx">fn</span><span class="p">.</span><span class="nx">accumulate</span><span class="p">(</span><span class="nx">v</span><span class="p">);</span>
       <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;emit&#39;</span><span class="p">,</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">emit</span><span class="p">());</span>
-      <span class="kd">var</span> <span class="nx">po</span> <span class="o">=</span> <span class="p">(</span><span class="nx">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nx">size</span><span class="p">;</span> <span class="c1">// prior open</span>
       <span class="nx">fn</span><span class="p">.</span><span class="nx">compensate</span><span class="p">(</span><span class="nx">p</span><span class="p">[</span><span class="nx">po</span><span class="p">]);</span>
-      <span class="nx">p</span><span class="p">[</span><span class="nx">idx</span> <span class="o">%</span> <span class="nx">size</span><span class="p">]</span><span class="o">=</span><span class="nx">v</span><span class="p">;</span>
+      <span class="nx">p</span><span class="p">[(</span><span class="nx">idx</span><span class="p">)</span> <span class="o">%</span> <span class="nx">size</span><span class="p">]</span><span class="o">=</span><span class="nx">v</span><span class="p">;</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
       <span class="nx">fn</span><span class="p">.</span><span class="nx">accumulate</span><span class="p">(</span><span class="nx">v</span><span class="p">);</span>
       <span class="nx">p</span><span class="p">[</span><span class="nx">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nx">v</span><span class="p">;</span>
