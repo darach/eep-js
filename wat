@@ -43,10 +43,9 @@ then
   echo
   echo -e "\t${tbold}${cfgreen}where ${cfyellow}<command> ${cfwhite}is :-${creset}"
   echo
-  echo -e "\t${tbold}${cfyellow}- bootstrap${cfgreen}:${creset} - Installs dependencies ${cfwhite}[${cfcyan}nodeunit${cfwhite},${cfcyan}profile${cfwhite},${cfcyan}byline${cfwhite},${cfcyan}docco${cfwhite}]${creset} via ${cfcyan}npm."
+  echo -e "\t${tbold}${cfyellow}- bootstrap${cfgreen}:${creset} - Installs dependencies ${cfwhite}[${cfcyan}nodeunit${cfwhite},${cfcyan}byline${cfwhite},${cfcyan}docco${cfwhite}]${creset} via ${cfcyan}npm."
   echo -e "\t${tbold}${cfyellow}- test${cfgreen}:${creset} - Runs ${cfcyan}nodeunit${creset} tests."
   echo -e "\t${tbold}${cfyellow}- docco${cfgreen}:${creset} - Runs ${cfcyan}docco${creset} to generate docs."
-  echo -e "\t${tbold}${cfyellow}- profile${cfgreen}:${creset} - Runs ${cfcyan}profile${creset}'d benchmark."
   echo -e "\t${tbold}${cfyellow}- microbench${cfgreen}:${creset} - Runs a micro benchmark."
   echo -e "\t${tbold}${cfyellow}- samples${cfgreen}:${creset} - Runs samples."
   echo
@@ -59,7 +58,7 @@ echo -e "${tbold}${cfblue}Wat? ${cfyellow}$1${creset}"
 case $cmd in
   bootstrap )
     sudo easy_install pygments
-    npm install nodeunit profile docco byline
+    npm install nodeunit docco byline
 	;;
   test )
     if [ $# -gt 1 ]
@@ -71,9 +70,6 @@ case $cmd in
 	;;
   docco )
     node_modules/docco/bin/docco `find lib -name \*.js`
-    ;;
-  profile )
-   NODE_PATH=lib node_modules/profile/bin/nodeprofile -o=profile.txt samples/microbench-nontemporal.js
     ;;
   microbench )
     NODE_PATH=lib node samples/microbench-nontemporal.js
