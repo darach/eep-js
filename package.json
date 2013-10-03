@@ -1,6 +1,6 @@
 {
   "name": "eep",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Embedded Event Processing in Node.js",
   "main": "./lib/eep.js",
   "directories": {
@@ -19,7 +19,7 @@
   "dependencies": {
     "docco": "~0.4.0",
     "byline": "~2.0.3",
-    "nodeunit": "~0.7.4"
+    "nodeunit": "~0.8.1"
   },
   "devDependencies": {
   },

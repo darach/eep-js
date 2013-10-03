@@ -116,4 +116,4 @@ for (var i = 1; i <= items; i++) {
 m3.tick();
 var end = new Date().getTime();
 
-console.log('V3. Elapsed: ' + ((end - start) / 1e3));
+console.log('V3. Elapsed: ' + ((end - start) / 1e3) + ' meps: ' + ((end - start) / 1e3) / 1e6);

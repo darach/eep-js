@@ -39,8 +39,12 @@ for (var fn in fns) {
 console.log('Sliding:');
 for (var fn in fns) {
   head('sliding', fns[fn].name);
+  var world = eep.EventWorld.make();
   for (var size in sizes) {
-    var sliding = eep.EventWorld.make().windows().sliding(fns[fn], sizes[size]);
+    var sliding = world.windows().sliding(fns[fn], sizes[size]);
+    if (fns[fn].name === "min" || fns[fn].name === "max" || fns[fn].name === "all") {
+      sliding = world.windows().ordered(sliding);
+    }
     bench('sliding', fns[fn].name, sliding, sizes[size], items);
   }
   foot();

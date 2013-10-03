@@ -3,15 +3,14 @@ var eep = require('eep');
 
 var values = [ 2, 4, 6, 8, 10, 13, 14, 15, 18, 20, 30, 14, 15, 10, 10, 9, 3, 1];
 
-
 // Tumbling windows
-var tumbling_count = eep.EventWorld.make().windows().sliding(eep.Stats.count, values.length);
-var tumbling_sum = eep.EventWorld.make().windows().sliding(eep.Stats.sum, values.length);
-var tumbling_min = eep.EventWorld.make().windows().sliding(eep.Stats.min, values.length);
-var tumbling_max = eep.EventWorld.make().windows().sliding(eep.Stats.max, values.length);
-var tumbling_mean = eep.EventWorld.make().windows().sliding(eep.Stats.mean, values.length);
-var tumbling_stdevs = eep.EventWorld.make().windows().sliding(eep.Stats.stdevs, values.length);
-var tumbling_vars = eep.EventWorld.make().windows().sliding(eep.Stats.vars, values.length);
+var tumbling_count = eep.EventWorld.make().windows().tumbling(eep.Stats.count, values.length);
+var tumbling_sum = eep.EventWorld.make().windows().tumbling(eep.Stats.sum, values.length);
+var tumbling_min = eep.EventWorld.make().windows().tumbling(eep.Stats.min, values.length);
+var tumbling_max = eep.EventWorld.make().windows().tumbling(eep.Stats.max, values.length);
+var tumbling_mean = eep.EventWorld.make().windows().tumbling(eep.Stats.mean, values.length);
+var tumbling_stdevs = eep.EventWorld.make().windows().tumbling(eep.Stats.stdevs, values.length);
+var tumbling_vars = eep.EventWorld.make().windows().tumbling(eep.Stats.vars, values.length);
 
 // Register callbacks
 tumbling_count.on('emit', function(value) { console.log('count:\t\t' + value); });
@@ -42,11 +41,14 @@ var stats = [
 ];
 var headers = [ 'Count\t\t', 'Sum\t\t', 'Min\t\t', 'Max\t\t', 'Mean\t\t', 'Stdev\t\t', 'Variance\t' ];
 
+var world = eep.EventWorld.make();
+
 // Create a composite function tumbling window
-var tumbling = eep.EventWorld.make().windows().tumbling(new eep.CompositeFunction(stats), values.length);
+var tumbling_inner = world.windows().tumbling(new eep.CompositeFunction(stats), values.length);
+var tumbling = tumbling_inner; //world.windows().ordered(tumbling_inner);
 
 // Register callback(s)
-tumbling.on('emit', function(values) { 
+tumbling_inner.on('emit', function(values) { 
   for (var i in values) {
     console.log(headers[i] + ':\t\t' + values[i]);
   }
