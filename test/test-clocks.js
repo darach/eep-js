@@ -45,6 +45,10 @@ exports.read = testCase({
     clock1.inc();
     assert.ok(clock1.at() >= then);
 
+    then = new Date().getTime();
+    clock1.tick();
+    assert.ok(clock1.at() >= then);
+
     assert.done();
   },
   'counting clock': function(assert) {
