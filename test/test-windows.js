@@ -163,24 +163,22 @@ exports.read = testCase({
     });
 
     function enqueueEvent() {
-      console.log("enqueue ");
       periodic.enqueue({just: "an event"});
     }
 
     function triggerTick() {
-      console.log("tick");
       periodic.tick();
     }
 
     enqueueEvent();
     setTimeout(enqueueEvent, 200);
     setTimeout(enqueueEvent, 800);
-    setTimeout(triggerTick, 1000);
+    setTimeout(triggerTick, 1000); //3
     setTimeout(triggerTick, 2000); //empty window should be produced here
     setTimeout(triggerTick, 3000); //empty window should be produced here
     setTimeout(enqueueEvent, 3200);
     setTimeout(enqueueEvent, 3800);
-    setTimeout(triggerTick, 4000);
+    setTimeout(triggerTick, 4000); //2
 
     setTimeout(function() {
       assert.same([3, 0, 0, 2], results);
