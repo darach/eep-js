@@ -27,6 +27,7 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.</p>             </td>             <td cla
 
   <span class="nx">self</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">at</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+    <span class="nx">mark</span> <span class="o">=</span> <span class="nx">at</span> <span class="o">+</span> <span class="nx">interval</span><span class="p">;</span>
     <span class="k">return</span> <span class="nx">at</span><span class="p">;</span>
   <span class="p">};</span>
 
@@ -36,10 +37,11 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.</p>             </td>             <td cla
 
   <span class="nx">self</span><span class="p">.</span><span class="nx">tick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">mark</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">mark</span> <span class="o">=</span> <span class="nx">at</span> <span class="o">+</span> <span class="nx">interval</span><span class="p">;</span>
+      <span class="k">throw</span> <span class="s2">&quot;clock was not initialized&quot;</span><span class="p">;</span>
     <span class="p">}</span>
+    <span class="nx">self</span><span class="p">.</span><span class="nx">inc</span><span class="p">();</span>
 
-    <span class="k">return</span> <span class="p">((</span><span class="nx">at</span> <span class="o">-</span> <span class="nx">mark</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nx">interval</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">((</span><span class="nx">at</span> <span class="o">-</span> <span class="nx">mark</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">);</span>
   <span class="p">};</span>
 
   <span class="nx">self</span><span class="p">.</span><span class="nx">tock</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">elapsed</span><span class="p">)</span> <span class="p">{</span>
