@@ -19,6 +19,17 @@ function AvgFunction() {
   self.make = function() { return new AvgFunction(); };
 };
 
+CountFunction.protorype = new eep.AggregateFunction();
+function CountFunction() {
+    var self = this; var count = 0;
+
+    self.init = function() { count = 0; };
+    self.accumulate = function() { count++; };
+    self.compensate = function() { count--; };
+    self.emit = function() { return count };
+    self.make = function() { return new CountFunction(); };
+}
+
 exports.read = testCase({
   setUp: function(cb) {
     this._openStdin = process.openStdin;
@@ -140,5 +151,41 @@ exports.read = testCase({
     assert.same([5, 7, 31], results);
 
     assert.done();
+  },
+  'periodic empty emit': function (assert) {
+    assert.expect(2);
+    var periodic = eep.EventWorld.make().windows().periodic(new CountFunction(), 1000);
+    assert.ok(periodic != null);
+
+    var results = [];
+    periodic.on('emit', function(v) {
+      results.push(v);
+    });
+
+    function enqueueEvent() {
+      periodic.enqueue({just: "an event"});
+    }
+
+    function triggerTick() {
+      periodic.tick();
+    }
+
+    enqueueEvent();
+    setTimeout(enqueueEvent, 200);
+    setTimeout(enqueueEvent, 800);
+    setTimeout(triggerTick, 1000); //3
+    setTimeout(triggerTick, 2000); //empty window should be produced here
+    setTimeout(triggerTick, 3000); //empty window should be produced here
+    setTimeout(enqueueEvent, 3200);
+    setTimeout(enqueueEvent, 3800);
+    setTimeout(triggerTick, 4000); //2
+
+    setTimeout(function() {
+      assert.same([3, 0, 0, 2], results);
+    }, 4100);
+
+    setTimeout(function() {
+      assert.done();
+    }, 4500);
   }
 });
