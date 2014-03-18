@@ -1,4 +1,4 @@
-# **eep.js**
+# **eep.js**  [![Build Status](https://travis-ci.org/darach/eep-js.png)](https://travis-ci.org/darach/eep-js)
 
 > Embedding Event Processing for Node.js
 

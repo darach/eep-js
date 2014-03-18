@@ -48,6 +48,7 @@ then
   echo -e "\t${tbold}${cfyellow}- docco${cfgreen}:${creset} - Runs ${cfcyan}docco${creset} to generate docs."
   echo -e "\t${tbold}${cfyellow}- microbench${cfgreen}:${creset} - Runs a micro benchmark."
   echo -e "\t${tbold}${cfyellow}- samples${cfgreen}:${creset} - Runs samples."
+  echo -e "\t${tbold}${cfyellow}- travis${cfgreen}:${creset} - Run travis entrypoint"
   echo
   echo -e "\t${cfred}${cwhite}No args and you get this help. :)${creset}"
   echo
@@ -89,4 +90,8 @@ case $cmd in
       echo -e "${creset}"
     fi
 	;;
+    travis )
+        npm i
+        NODE_PATH=lib node_modules/nodeunit/bin/nodeunit test
+    ;;
 esac
