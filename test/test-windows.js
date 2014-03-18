@@ -154,7 +154,7 @@ exports.read = testCase({
   },
   'periodic empty emit': function (assert) {
     assert.expect(2);
-    var periodic = eep.EventWorld.make().windows().periodic(new CountFunction(), 1000);
+    var periodic = eep.EventWorld.make().windows().periodic(new CountFunction(), 100);
     assert.ok(periodic != null);
 
     var results = [];
@@ -171,21 +171,21 @@ exports.read = testCase({
     }
 
     enqueueEvent();
-    setTimeout(enqueueEvent, 200);
-    setTimeout(enqueueEvent, 800);
-    setTimeout(triggerTick, 1000); //3
-    setTimeout(triggerTick, 2000); //empty window should be produced here
-    setTimeout(triggerTick, 3000); //empty window should be produced here
-    setTimeout(enqueueEvent, 3200);
-    setTimeout(enqueueEvent, 3800);
-    setTimeout(triggerTick, 4000); //2
+    setTimeout(enqueueEvent, 20);
+    setTimeout(enqueueEvent, 80);
+    setTimeout(triggerTick, 100); //3
+    setTimeout(triggerTick, 200); //empty window should be produced here
+    setTimeout(triggerTick, 300); //empty window should be produced here
+    setTimeout(enqueueEvent, 320);
+    setTimeout(enqueueEvent, 380);
+    setTimeout(triggerTick, 400); //2
 
     setTimeout(function() {
       assert.same([3, 0, 0, 2], results);
-    }, 4100);
+    }, 410);
 
     setTimeout(function() {
       assert.done();
-    }, 4500);
+    }, 450);
   }
 });
