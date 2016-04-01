@@ -10,7 +10,7 @@
 
 I wrote **eep.js** as I find the lack of data-centric stream processing operations in OO and functional languages lacking. Data-centric stream or event processing rewires your brain to think in terms of data flow. Node.js is the 1st language, to my knowledge, that is tyrannically asynchronous, devilishly event-oriented and amazoidingly non-blocking. That's music to a CEP guys ears. Good music. Thin Lizzy good. An environment that makes event or stream processing natural is a big win. So thank you Node.js folk! Loving it.
 
-Last, but not least, **eep.js** is fast. As a devotee, fan and practitioner of Martin Thompson's 'Mechanical Sympathy' I thought it would be fun to apply principles normally reserved for lower level languages such as C, Java or even assembly to a dynamic language like JavaScript, with the V8 powered Node.js in particular.
+Last, but not least, **eep.js** is fast. As a devotee, fan and practitioner of [Martin Thompson's 'Mechanical Sympathy'](http://mechanical-sympathy.blogspot.com/) I thought it would be fun to apply principles normally reserved for lower level languages such as C, Java or even assembly to a dynamic language like JavaScript, with the V8 powered Node.js in particular.
 
 So **eep.js** is a thought experiment in applying the principles of mechanical sympathy to JavaScript.
 
