@@ -20,7 +20,7 @@ function AvgFunction() {
   self.make = function() { return new AvgFunction(); };
 };
 
-CountFunction.protorype = new eep.AggregateFunction();
+CountFunction.prototype = new eep.AggregateFunction();
 function CountFunction() {
     var self = this; var count = 0;
 
