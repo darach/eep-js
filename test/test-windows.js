@@ -50,8 +50,10 @@ exports.read = testCase({
     cb();
   },
   'tumbling window': function(assert) {
-    var tumbling  = eep.EventWorld.make().windows().tumbling(new AvgFunction(), 2);
+    const windowSize = 2;
+    var tumbling  = eep.EventWorld.make().windows().tumbling(new AvgFunction(), windowSize);
     assert.ok(tumbling != null);
+    assert.equal(tumbling.size(), windowSize);
 
     var results = new Array();
     tumbling.on('emit', function(v) {
@@ -67,8 +69,10 @@ exports.read = testCase({
     assert.done();
   },
   'sliding window': function(assert) {
-    var sliding  = eep.EventWorld.make().windows().sliding(new AvgFunction(), 2);
+    const windowSize = 2;
+    var sliding  = eep.EventWorld.make().windows().sliding(new AvgFunction(), windowSize);
     assert.ok(sliding != null);
+    assert.equal(sliding.size(), windowSize);
 
     var results = [];
     sliding.on('emit', function(v) {
